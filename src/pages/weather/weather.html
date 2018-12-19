@@ -1,0 +1,53 @@
+<!--
+  Generated template for the WeatherPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>weather</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-label fixed>City</ion-label>
+  <ion-input #ref type="text" value="" placeholder="Enter a city..."></ion-input>
+  <p style="text-align:center">
+    <button ion-button (click)="getWeatherData(ref)">What is my weather ?</button>
+  </p>
+  <div *ngIf="weatherData">
+    <div class="time">
+      {{ weatherData.dt * 1000 | date }}
+    </div>
+    <div class="temp-image">
+      <img *ngIf="weatherData.main.humidity <= 40" src="http://www.myiconfinder.com/uploads/iconsets/256-256-6f5027c35df0ec761675e4800f928cfa-sun.png"
+        alt="">
+      <img *ngIf="weatherData.main.humidity < 60 && weatherData.main.humidity > 40" src="https://d1nhio0ox7pgb.cloudfront.net/_img/v_collection_png/512x512/shadow/cloud_sun.png"
+        alt="">
+      <img *ngIf="weatherData.main.humidity >= 60" src="http://icons.iconarchive.com/icons/large-icons/large-weather/256/rain-icon.png"
+        alt="">
+    </div>
+    <div style="text-align:center" class="temp">
+      {{ weatherData.main.temp - 273.15 | number:'2.2' }}°C
+    </div>
+    <div class="wind">
+      <img src="https://freeiconshop.com/wp-content/uploads/edd/location-arrow-flat.png" [ngStyle]="{'transform': 'rotate('+weatherData.wind.deg+'deg)'}">
+      {{ weatherData.wind.speed }} m/s
+    </div>
+  </div>
+  <div *ngIf="weatherForecast">
+    <ion-grid>
+      <ion-row>
+        <ng-container *ngFor="let item of weatherForecast.list; let i = index">
+          <ion-col *ngIf="i % 2 === 0" col-3>
+            {{ item.main.temp - 273.15 | number:'2.2' }}°C
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
